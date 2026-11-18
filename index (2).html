@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MindCare - ดูแลใจ เข้าใจตัวเอง</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#8B5CF6">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0e6ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.app-container {
+  width: 390px;
+  height: 844px;
+  background: linear-gradient(180deg, #f5f0ff 0%, #ffffff 100%);
+  border-radius: 40px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
+  border: 8px solid #1a1a1a;
+}
+
+.screen {
+  display: none;
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: 80px;
+}
+
+.screen.active {
+  display: block;
+}
+
+/* Splash */
+.splash-content {
+  text-align: center;
+  padding: 60px 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #e9d5ff 0%, #f3e8ff 100%);
+}
+
+.school-logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  border: 4px solid white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.logo-heart {
+  font-size: 60px;
+  margin: 10px 0;
+}
+
+.splash-content h1 {
+  font-size: 42px;
+  color: #7c3aed;
+  margin: 10px 0;
+  font-weight: 700;
+}
+
+.tagline {
+  font-size: 18px;
+  color: #6b21a8;
+  margin: 15px 0 30px;
+  line-height: 1.5;
+}
+
+.illustration {
+  font-size: 80px;
+  margin: 20px 0;
+}
+
+.footer-note {
+  margin-top: 30px;
+  font-size: 12px;
+  color: #7c3aed;
+  opacity: 0.8;
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  color: white;
+  border: none;
+  padding: 16px 40px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 15px 0;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+  transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: white;
+  color: #7c3aed;
+  border: 2px solid #ddd6fe;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 14px;
+  margin: 8px 0;
+  width: 80%;
+  cursor: pointer;
+}
+
+.btn-google {
+  background: white;
+  border: 1px solid #e5e7eb;
+  padding: 14px;
+  border-radius: 25px;
+  width: 100%;
+  margin: 10px 0;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  padding: 50px 20px 20px;
+  background: white;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  margin-right: 15px;
+  color: #7c3aed;
+}
+
+.header h2 {
+  font-size: 18px;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+/* Top Bar Home */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px 20px 20px;
+}
+
+.greeting h2 {
+  font-size: 22px;
+  color: #1f2937;
+}
+
+.greeting p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.avatar {
+  font-size: 40px;
+  background: #f3e8ff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Quick Actions */
+.quick-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  padding: 10px 20px;
+}
+
+.action-card {
+  background: white;
+  border-radius: 20px;
+  padding: 20px 15px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.action-card:hover {
+  transform: translateY(-3px);
+}
+
+.action-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.action-card span {
+  font-size: 13px;
+  color: #374151;
+  font-weight: 500;
+}
+
+/* Quote */
+.quote-card {
+  background: #faf5ff;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 20px;
+  border-left: 4px solid #a78bfa;
+}
+
+.quote {
+  font-style: italic;
+  color: #6b21a8;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+/* Bottom Nav */
+.bottom-nav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0 20px;
+  border-top: 1px solid #f3e8ff;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+
+.nav-item {
+  text-align: center;
+  font-size: 11px;
+  color: #9ca3af;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.nav-item.active {
+  color: #7c3aed;
+  font-weight: 600;
+}
+
+.nav-item span {
+  font-size: 20px;
+}
+
+/* Mood Screen */
+.mood-content {
+  padding: 20px;
+}
+
+.mood-content h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #374151;
+}
+
+.mood-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.mood-item {
+  background: white;
+  border-radius: 16px;
+  padding: 15px 10px;
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: all 0.2s;
+}
+
+.mood-item.selected {
+  border-color: #8b5cf6;
+  background: #f5f3ff;
+  transform: scale(1.05);
+}
+
+.mood-emoji {
+  font-size: 36px;
+  margin-bottom: 5px;
+}
+
+.mood-item span {
+  font-size: 12px;
+  color: #4b5563;
+}
+
+#mood-note {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 15px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: none;
+  margin-bottom: 15px;
+  background: white;
+}
+
+/* Stats */
+.stats-content {
+  padding: 20px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: #f3f4f6;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.tab.active {
+  background: #8b5cf6;
+  color: white;
+}
+
+.chart-container {
+  background: white;
+  border-radius: 20px;
+  padding: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.summary-pie {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.pie {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend {
+  font-size: 13px;
+}
+
+.legend div {
+  margin: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Assessment */
+.assessment-intro {
+  padding: 20px;
+}
+
+.assessment-intro ul {
+  margin: 20px 0;
+  padding-left: 20px;
+  color: #4b5563;
+}
+
+.assessment-intro li {
+  margin: 8px 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.question-card {
+  background: white;
+  margin: 15px 20px;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.question-card h4 {
+  margin-bottom: 15px;
+  color: #1f2937;
+}
+
+.options label {
+  display: block;
+  padding: 10px;
+  margin: 5px 0;
+  background: #f9fafb;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.options input {
+  margin-right: 8px;
+}
+
+.result-box {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.score-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* Activities, Knowledge, Help */
+.activity-list, .knowledge-list, .help-list {
+  padding: 10px 20px;
+}
+
+.activity-card, .knowledge-card, .help-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 2px 10px rgba(139, 92, 246, 0.08);
+  cursor: pointer;
+}
+
+.act-icon, .kn-icon, .help-icon {
+  font-size: 32px;
+  width: 50px;
+  text-align: center;
+}
+
+.activity-card h4, .knowledge-card h4, .help-card h4 {
+  font-size: 15px;
+  color: #1f2937;
+  margin-bottom: 4px;
+}
+
+.activity-card p, .knowledge-card p, .help-card p {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* Profile */
+.profile-content {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+.profile-logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  border: 4px solid #ddd6fe;
+}
+
+.profile-stats {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.profile-stats div {
+  margin: 10px 0;
+  font-size: 15px;
+}
+
+/* Login */
+.login-form {
+  padding: 20px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 12px;
+  padding: 12px 15px;
+  margin: 12px 0;
+  border: 1px solid #e5e7eb;
+}
+
+.input-group input {
+  border: none;
+  outline: none;
+  flex: 1;
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #6b7280;
+  margin: 10px 0;
+}
+
+.or {
+  text-align: center;
+  color: #9ca3af;
+  margin: 15px 0;
+}
+
+.register-link {
+  text-align: center;
+  color: #7c3aed;
+  margin-top: 15px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.search-bar {
+  padding: 0 20px 15px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 25px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  background: white;
+}
+
+/* Stretch */
+.stretch-content {
+  padding: 15px 20px;
+}
+.stretch-content .intro {
+  background: #faf5ff;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #6b21a8;
+}
+.stretch-item {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  margin: 10px 0;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.08);
+}
+.stretch-item h4 {
+  color: #7c3aed;
+  margin-bottom: 5px;
+}
+.stretch-item p {
+  font-size: 14px;
+  color: #4b5563;
+}
+.note {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 13px;
+  color: #7c3aed;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal.hidden {
+  display: none;
+}
+.modal-content {
+  background: white;
+  border-radius: 24px;
+  padding: 25px;
+  width: 85%;
+  max-width: 340px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+.modal-content h3 {
+  color: #7c3aed;
+  margin-bottom: 10px;
+}
+.modal-content p {
+  color: #4b5563;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+.breath-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px auto;
+  font-weight: 600;
+  font-size: 16px;
+  transition: transform 0.5s ease;
+}
+.breath-circle.inhale {
+  transform: scale(1.3);
+}
+.breath-circle.exhale {
+  transform: scale(0.8);
+}
+.timer {
+  font-size: 36px;
+  font-weight: bold;
+  color: #7c3aed;
+  margin: 10px 0;
+}
+.modal-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+.modal-buttons .btn-primary,
+.modal-buttons .btn-secondary {
+  width: 100%;
+  margin: 0;
+}
+#sound-controls button {
+  background: #f3e8ff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 20px;
+  margin: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+#sound-controls.hidden {
+  display: none;
+}
+
+/* Knowledge Detail */
+.detail-content {
+  padding: 15px 20px 100px;
+  line-height: 1.7;
+  color: #374151;
+}
+.detail-content h3 {
+  color: #7c3aed;
+  margin: 15px 0 10px;
+}
+.detail-content h4 {
+  color: #6b21a8;
+  margin: 12px 0 6px;
+}
+.detail-content ul, .detail-content ol {
+  padding-left: 20px;
+  margin: 8px 0;
+}
+.detail-content li {
+  margin: 6px 0;
+}
+.trend-good {
+  color: #10b981;
+  font-weight: 600;
+}
+.trend-bad {
+  color: #ef4444;
+  font-weight: 600;
+}
+.trend-neutral {
+  color: #f59e0b;
+  font-weight: 600;
+}
+.progress-card {
+  background: white;
+  border-radius: 16px;
+  padding: 15px;
+  margin: 15px 20px;
+  box-shadow: 0 2px 10px rgba(139, 92, 246, 0.1);
+  text-align: center;
+}
+
+</style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Splash Screen -->
+    <div id="splash" class="screen active">
+      <div class="splash-content">
+        <img src="assets/school-logo.jpeg" alt="ตราโรงเรียน" class="school-logo">
+        <div class="logo-heart">💜</div>
+        <h1>MindCare</h1>
+        <p class="tagline">ดูแลใจ เข้าใจตัวเอง<br>ไปด้วยกัน ♡</p>
+        <div class="illustration">👩‍🎧</div>
+        <button class="btn-primary" onclick="showScreen('home')">เริ่มใช้งาน</button>
+        <p class="footer-note">พัฒนาโดยนักเรียนมัธยมศึกษา<br>โรงเรียนนบพิตำวิทยา</p>
+      </div>
+    </div>
+
+    <!-- Login Screen (optional) -->
+    <div id="login" class="screen">
+      <div class="header">
+        <button class="back-btn" onclick="showScreen('splash')">←</button>
+        <h2>เข้าสู่ระบบ</h2>
+      </div>
+      <div class="login-form">
+        <div class="input-group">
+          <span>📧</span>
+          <input type="email" placeholder="อีเมลหรือชื่อผู้ใช้">
+        </div>
+        <div class="input-group">
+          <span>🔒</span>
+          <input type="password" placeholder="รหัสผ่าน">
+        </div>
+        <label class="checkbox"><input type="checkbox"> จดจำการเข้าสู่ระบบ</label>
+        <button class="btn-primary" onclick="showScreen('home')">เข้าสู่ระบบ</button>
+        <p class="or">หรือ</p>
+        <button class="btn-google" onclick="googleLogin()">🔵 เข้าสู่ระบบด้วย Google</button>
+        <p class="register-link" onclick="showScreen('home')">สร้างบัญชีใหม่</p>
+      </div>
+    </div>
+
+    <!-- Home Screen -->
+    <div id="home" class="screen">
+      <div class="top-bar">
+        <div class="greeting">
+          <h2>สวัสดี,</h2>
+          <p>วันนี้เป็นอย่างไรบ้าง? ♡</p>
+        </div>
+        <div class="avatar">👩</div>
+      </div>
+      <div class="quick-actions">
+        <div class="action-card" onclick="showScreen('mood')">
+          <div class="action-icon">😊</div>
+          <span>บันทึกอารมณ์</span>
+        </div>
+        <div class="action-card" onclick="showScreen('assessment')">
+          <div class="action-icon">📋</div>
+          <span>แบบประเมิน<br>ภาวะซึมเศร้า</span>
+        </div>
+        <div class="action-card" onclick="showScreen('activities')">
+          <div class="action-icon">🧘</div>
+          <span>กิจกรรมผ่อนคลาย</span>
+        </div>
+        <div class="action-card" onclick="showScreen('knowledge')">
+          <div class="action-icon">📚</div>
+          <span>คลังความรู้</span>
+        </div>
+      </div>
+      <div class="quote-card">
+        <p>💭 ข้อควรระวังวันนี้</p>
+        <p class="quote">"ไม่เป็นไรนะ... ถ้าวันนี้รู้สึกเหนื่อย พักสักหน่อย แล้วค่อยเริ่มใหม่ก็ได้นะ ♡"</p>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item active" onclick="showScreen('home')"><span>🏠</span>หน้าแรก</div>
+        <div class="nav-item" onclick="showScreen('mood')"><span>📝</span>บันทึก</div>
+        <div class="nav-item" onclick="showScreen('activities')"><span>🧘</span>กิจกรรม</div>
+        <div class="nav-item" onclick="showScreen('knowledge')"><span>📖</span>ความรู้</div>
+        <div class="nav-item" onclick="showScreen('profile')"><span>👤</span>โปรไฟล์</div>
+      </div>
+    </div>
+
+    <!-- Mood Recording -->
+    <div id="mood" class="screen">
+      <div class="header">
+        <button class="back-btn" onclick="showScreen('home')">←</button>
+        <h2>บันทึกอารมณ์</h2>
+      </div>
+      <div class="mood-content">
+        <h3>วันนี้คุณรู้สึกอย่างไร?</h3>
+        <div class="mood-grid">
+          <div class="mood-item" data-mood="happy" onclick="selectMood(this)">
+            <div class="mood-emoji">😊</div>
+            <span>มีความสุข</span>
+          </div>
+          <div class="mood-item" data-mood="good" onclick="selectMood(this)">
+            <div class="mood-emoji">🙂</div>
+            <span>ดี</span>
+          </div>
+          <div class="mood-item" data-mood="normal" onclick="selectMood(this)">
+            <div class="mood-emoji">😐</div>
+            <span>ปกติ</span>
+          </div>
+          <div class="mood-item" data-mood="sad" onclick="selectMood(this)">
+            <div class="mood-emoji">😢</div>
+            <span>เศร้า</span>
+          </div>
+          <div class="mood-item" data-mood="stressed" onclick="selectMood(this)">
+            <div class="mood-emoji">😰</div>
+            <span>เครียด</span>
+          </div>
+          <div class="mood-item" data-mood="anxious" onclick="selectMood(this)">
+            <div class="mood-emoji">😟</div>
+            <span>กังวล</span>
+          </div>
+        </div>
+        <textarea id="mood-note" placeholder="บันทึกความรู้สึกเพิ่มเติม (ไม่บังคับ)&#10;เช่น วันนี้รู้สึกเหนื่อยจากการเรียน..."></textarea>
+        <button class="btn-primary" onclick="saveMood()">บันทึก</button>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="showScreen('home')"><span>🏠</span>หน้าแรก</div>
+        <div class="nav-item active" onclick="showScreen('mood')"><span>📝</span>บันทึก</div>
+        <div class="nav-item" onclick="showScreen('activities')"><span>🧘</span>กิจกรรม</div>
+        <div class="nav-item" onclick="showScreen('knowledge')"><span>📖</span>ความรู้</div>
+        <div class="nav-item" onclick="showScreen('profile')"><span>👤</span>โปรไฟล์</div>
+      </div>
+    </div>
+
+    <!-- Statistics -->
+    <div id="stats" class="screen">
+      <div class="header">
+        <button class="back-btn" onclick="showScreen('home')">←</button>
+        <h2>สถิติอารมณ์</h2>
+      </div>
+      <div class="stats-content">
+        <div class="tabs">
+          <span class="tab active">สัปดาห์</span>
+          <span class="tab">เดือน</span>
+          <span class="tab">ทั้งหมด</span>
+        </div>
+        <div class="chart-container">
+          <canvas id="moodChart" width="300" height="180"></canvas>
+        </div>
+        <h3>สรุปอารมณ์ของคุณ</h3>
+        <div class="summary-pie">
+          <div class="pie" style="background: conic-gradient(#A78BFA 0% 40%, #FBBF24 40% 70%, #60A5FA 70% 90%, #F472B6 90% 100%);"></div>
+          <div class="legend">
+            <div><span class="dot" style="background:#A78BFA"></span> มีความสุข 40%</div>
+            <div><span class="dot" style="background:#FBBF24"></span> ปกติ 30%</div>
+            <div><span class="dot" style="background:#60A5FA"></span> เครียด 20%</div>
+            <div><span class="dot" style="background:#F472B6"></span> เศร้า 10%</div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="showScreen('home')"><span>🏠</span>หน้าแรก</div>
+        <div class="nav-item" onclick="showScreen('mood')"><span>📝</span>บันทึก</div>
+        <div class="nav-item" onclick="showScreen('activities')"><span>🧘</span>กิจกรรม</div>
+        <div class="nav-item" onclick="showScreen('knowledge')"><span>📖</span>ความรู้</div>
+        <div class="nav-item" onclick="showScreen('profile')"><span>👤</span>โปรไฟล์</div>
+      </div>
+    </div>
+
+    <!-- Assessment PHQ-9 -->
+    <div id="assessment" class="screen">
+      <div class="header">
+        <button class="back-btn" onclick="showScreen('home')">←</button>
+        <h2>แบบประเมินภาวะซึมเศร้า (PHQ-9)</h2>
+      </div>
+      <div class="assessment-intro">
+        <p>แบบประเมินนี้ช่วยคัดกรองความเสี่ยงของภาวะซึมเศร้าเบื้องต้น (ไม่ใช่การวินิจฉัยทางการแพทย์)</p>
+        <ul>
+          <li>⏱ มี 9 ข้อ ใช้เวลาประมาณ 3-5 นาที</li>
+          <li>ผลลัพธ์เป็นเพียงการประเมินเบื้องต้น</li>
+          <li>หากมีความเสี่ยงสูง ควรปรึกษาครูผู้ปกครอง หรือผู้เชี่ยวชาญ</li>
+        </ul>
+        <button class="btn-primary" onclick="startAssessment()">เริ่มทำแบบประเมิน</button>
+      </div>
+      <div id="assessment-questions" class="hidden">
+        <!-- Questions will be injected by JS -->
+      </div>
+      <div id="assessment-result" class="hidden">
+        <!-- Result will be shown here -->
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="showScreen('home')"><span>🏠</span>หน้าแรก</div>
+        <div class="nav-item" onclick="showScreen('mood')"><span>📝</span>บันทึก</div>
+        <div class="nav-item" onclick="showScreen('activities')"><span>🧘</span>กิจกรรม</div>
+        <div class="nav-item" onclick="showScreen('knowledge')"><span>📖</span>ความรู้</div>
+        <div class="nav-item" onclick="showScreen('profile')"><span>👤</span>โปรไฟล์</div>
+      </div>
+    </div>
+
+    <!-- Activities -->
+    <div id="activities" class="screen">
+      <div class="header">
+        <button class="back-btn" onclick="showScreen('home')">←</button>
+        <h2>กิจกรรมผ่อนคลาย</h2>
+      </div>
+      <div class="activity-list">
+        <div class="activity-card" onclick="openBreathing()">
+          <div class="act-icon">🫁</div>
+          <div>
+            <h4>ฝึกหายใจ (Breathing)</h4>
+            <p>ลดความเครียด ช่วยให้ผ่อนคลาย</p>
+          </div>
+        </div>
+        <div class="activity-card" onclick="openMeditation()">
+          <div class="act-icon">🧘‍♀️</div>
+          <div>
+            <h4>สมาธิสั้น ๆ</h4>
+            <p>โฟกัสในปัจจุบัน 5 นาที</p>
+          </div>
+        </div>
+        <div class="activity-card" onclick="openSounds()">
+          <div class="act-icon">🎵</div>
+          <div>
+            <h4>เสียงผ่อนคลาย</h4>
+            <p>เสียงธรรมชาติช่วยให้สบายใจ</p>
+          </div>
+        </div>
+        <div class="activity-card" onclick="showScreen('stretch')">
+          <div class="act-icon">🤸</div>
+          <div>
+            <h4>ยืดเหยียดร่างกาย</h4>
+            <p>คลายความตึงเครียด</p>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="showScreen('home')"><span>🏠</span>หน้าแรก</div>
+        <div class="nav-item" onclick="showScreen('mood')"><span>📝</span>บันทึก</div>
+        <div class="nav-item active" onclick="showScreen('activities')"><span>🧘</span>กิจกรรม</div>
+        <div class="nav-item" onclick="showScreen('knowledge')"><span>📖</span>ความรู้</div>
+        <div class="nav-item" onclick="showScreen('profile')"><span>👤</span>โปรไฟล์</div>
+      </div>
+    </div>
+
+    <!-- Stretch Screen -->
+    <div id="stretch" class="screen">
+      <div class="header">
+        <button class="back-btn" onclick="showScreen('activities')">←</button>
+        <h2>ยืดเหยียดร่างกาย</h2>
+      </div>
+      <div class="stretch-content">
+        <p class="intro">เซตยืดเหยียดแนะนำสำหรับนักเรียน (5-10 นาที)<br>ทำช้า ๆ หายใจลึก ๆ ไม่ฝืน</p>
+        <div class="stretch-item">
+          <h4>1. ยืดคอ</h4>
+          <p>เอียงศีรษะไปด้านข้างช้า ๆ ค้าง 15-20 วินาที สลับข้าง</p>
+        </div>
+        <div class="stretch-item">
+          <h4>2. ยืดไหล่และแขน</h4>
+          <p>ดึงแขนข้างหนึ่งข้ามอก ใช้มืออีกข้างกดเบา ๆ ค้าง 20 วินาที</p>
+        </div>
+        <div class="stretch-item">
+          <h4>3. ยืดหลัง (Cat-Cow)</h4>
+          <p>คุกเข่า โก่งหลังขึ้น (แมว) แล้วแอ่นลง (วัว) ทำ 8 รอบช้า ๆ</p>
+        </div>
+        <div class="stretch-item">
+          <h4>4. ยืดขาและสะโพก</h4>
+          <p>ยืนแยกขา โน้มตัวไปด้านข้าง หรือนั่งยืดขาตรง</p>
+        </div>
+        <div class="stretch-item">
+          <h4>5. ยืดข้อมือ</h4>
+          <p>ยืดแขนออก งอข้อมือขึ้น-ลง เหมาะหลังใช้มือถือ/คอมพิวเตอร์นาน</p>
+        </div>
+        <p class="note">💡 ทำทุกวันหลังเรียน จะช่วยลดความเมื่อยและเครียดได้ดี</p>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="showScreen('home')"><span>🏠</span>หน้าแรก</div>
+        <div class="nav-item" onclick="showScreen('mood')"><span>📝</span>บันทึก</div>
+        <div class="nav-item active" onclick="showScreen('activities')"><span>🧘</span>กิจกรรม</div>
+        <div class="nav-item" onclick="showScreen('knowledge')"><span>📖</span>ความรู้</div>
+        <div class="nav-item" onclick="showScreen('profile')"><span>👤</span>โปรไฟล์</div>
+      </div>
+    </div>
+
+    <!-- Modal for Breathing / Meditation / Sounds -->
+    <div id="activity-modal" class="modal hidden">
+      <div class="modal-content">
+        <h3 id="modal-title">กิจกรรม</h3>
+        <p id="modal-message">กดเริ่มแล้วหายใจตามจังหวะ</p>
+        <div id="breath-circle" class="breath-circle hidden">หายใจเข้า</div>
+        <div id="timer-display" class="timer">05:00</div>
+        <div class="modal-buttons">
+          <button id="start-btn" class="btn-primary" onclick="toggleActivity()">เริ่ม / หยุด</button>
+          <button class="btn-secondary" onclick="showScreen('help'); closeModal()">ไปหน้าช่วยเหลือ</button>
+          <button class="btn-secondary" onclick="closeModal()">ปิด</button>
+        </div>
+        <div id="sound-controls" class="hidden">
+          <h4>เสียงธรรมชาติ</h4>
+          <button onclick="playSound('rain')">🌧️ เสียงฝน</button>
+          <p style="font-size:12px; margin-top:10px;">เสียงตัวอย่างสั้น ๆ (สามารถเพิ่มไฟล์เสียงอื่นได้ในโฟลเดอร์ assets/sounds)</p>
+          <audio id="rain-audio" src="assets/sounds/rain.mp3" loop></audio>
+        </div>
+      </div>
+    </div>
+
+    <!-- Knowledge -->
+    <div id="knowledge" class="screen">
+      <div class="header">
+        <button class="back-btn" onclick="showScreen('home')">←</button>
+        <h2>คลังความรู้</h2>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="ค้นหาบทความ...">
+      </div>
+      <div class="knowledge-list">
+        <div class="knowledge-card" onclick="showKnowledge('depression')">
+          <div class="kn-icon">🧠</div>
+          <div>
+            <h4>รู้จักภาวะซึมเศร้า</h4>
+            <p>อาการ สาเหตุ และการรับมือ</p>
+          </div>
+        </div>
+        <div class="knowledge-card" onclick="showKnowledge('mental-health-tips')">
+          <div class="kn-icon">🌱</div>
+          <div>
+            <h4>10 วิธีดูแลสุขภาพจิต</h4>
+            <p>ในชีวิตประจำวัน</p>
+          </div>
+        </div>
+        <div class="knowledge-card" onclick="showKnowledge('stress-signs')">
+          <div class="kn-icon">👨‍👩‍👧</div>
+          <div>
+            <h4>สัญญาณเตือนว่าคุณกำลังเครียดมากเกินไป</h4>
+          </div>
+        </div>
+        <div class="knowledge-card" onclick="showKnowledge('help-friend')">
+          <div class="kn-icon">🤝</div>
+          <div>
+            <h4>วิธีช่วยเพื่อนให้รู้สึกดี</h4>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="showScreen('home')"><span>🏠</span>หน้าแรก</div>
+        <div class="nav-item" onclick="showScreen('mood')"><span>📝</span>บันทึก</div>
+        <div class="nav-item" onclick="showScreen('activities')"><span>🧘</span>กิจกรรม</div>
+        <div class="nav-item active" onclick="showScreen('knowledge')"><span>📖</span>ความรู้</div>
+        <div class="nav-item" onclick="showScreen('profile')"><span>👤</span>โปรไฟล์</div>
+      </div>
+    </div>
+
+    <!-- Knowledge Detail -->
+    <div id="knowledge-detail" class="screen">
+      <div class="header">
+        <button class="back-btn" onclick="showScreen('knowledge')">←</button>
+        <h2 id="detail-title">บทความ</h2>
+      </div>
+      <div id="detail-content" class="detail-content">
+        <!-- Content loaded by JS -->
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="showScreen('home')"><span>🏠</span>หน้าแรก</div>
+        <div class="nav-item" onclick="showScreen('mood')"><span>📝</span>บันทึก</div>
+        <div class="nav-item" onclick="showScreen('activities')"><span>🧘</span>กิจกรรม</div>
+        <div class="nav-item active" onclick="showScreen('knowledge')"><span>📖</span>ความรู้</div>
+        <div class="nav-item" onclick="showScreen('profile')"><span>👤</span>โปรไฟล์</div>
+      </div>
+    </div>
+
+    <!-- Help -->
+    <div id="help" class="screen">
+      <div class="header">
+        <button class="back-btn" onclick="showScreen('home')">←</button>
+        <h2>ขอความช่วยเหลือ</h2>
+      </div>
+      <div class="help-list">
+        <div class="help-card">
+          <div class="help-icon">💬</div>
+          <div>
+            <h4>พูดคุยกับครูแนะแนว</h4>
+            <p>ติดต่อผ่านโรงเรียนของคุณ</p>
+          </div>
+        </div>
+        <div class="help-card">
+          <div class="help-icon">📞</div>
+          <div>
+            <h4>สายด่วนสุขภาพจิต 1323</h4>
+            <p>ให้บริการ 24 ชั่วโมง</p>
+          </div>
+        </div>
+        <div class="help-card">
+          <div class="help-icon">🏥</div>
+          <div>
+            <h4>โรงพยาบาลใกล้คุณ</h4>
+            <p>ค้นหาตามสถานที่ของคุณ</p>
+          </div>
+        </div>
+        <div class="help-card">
+          <div class="help-icon">🌐</div>
+          <div>
+            <h4>ช่องทางออนไลน์เพิ่มเติม</h4>
+            <p>เช่น LINE, Facebook, เว็บไซต์ทางการ</p>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="showScreen('home')"><span>🏠</span>หน้าแรก</div>
+        <div class="nav-item" onclick="showScreen('mood')"><span>📝</span>บันทึก</div>
+        <div class="nav-item" onclick="showScreen('activities')"><span>🧘</span>กิจกรรม</div>
+        <div class="nav-item" onclick="showScreen('knowledge')"><span>📖</span>ความรู้</div>
+        <div class="nav-item" onclick="showScreen('profile')"><span>👤</span>โปรไฟล์</div>
+      </div>
+    </div>
+
+    <!-- Profile -->
+    <div id="profile" class="screen">
+      <div class="header">
+        <h2>โปรไฟล์</h2>
+      </div>
+      <div class="profile-content">
+        <img src="assets/school-logo.jpeg" alt="ตราโรงเรียน" class="profile-logo">
+        <h3>นักเรียน MindCare</h3>
+        <p>โรงเรียนนบพิตำวิทยา</p>
+        <div class="profile-stats">
+          <div>บันทึกอารมณ์ <strong id="mood-count">0</strong> ครั้ง</div>
+          <div>ทำแบบประเมิน <strong>1</strong> ครั้ง</div>
+        </div>
+        <button class="btn-secondary" onclick="showScreen('stats')">ดูสถิติอารมณ์</button>
+        <button class="btn-secondary" onclick="showScreen('help')">ขอความช่วยเหลือ</button>
+        <button class="btn-secondary" onclick="showScreen('splash')">ออกจากระบบ</button>
+      </div>
+      <div class="bottom-nav">
+        <div class="nav-item" onclick="showScreen('home')"><span>🏠</span>หน้าแรก</div>
+        <div class="nav-item" onclick="showScreen('mood')"><span>📝</span>บันทึก</div>
+        <div class="nav-item" onclick="showScreen('activities')"><span>🧘</span>กิจกรรม</div>
+        <div class="nav-item" onclick="showScreen('knowledge')"><span>📖</span>ความรู้</div>
+        <div class="nav-item active" onclick="showScreen('profile')"><span>👤</span>โปรไฟล์</div>
+      </div>
+    </div>
+  </div>
+
+  
+<script>
+// MindCare App Logic
+let currentMood = null;
+let moodHistory = JSON.parse(localStorage.getItem('mindcare_moods') || '[]');
+let assessmentAnswers = [];
+
+function showScreen(screenId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+  
+  // Update bottom nav active state
+  document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+  const navMap = {
+    'home': 0,
+    'mood': 1,
+    'activities': 2,
+    'knowledge': 3,
+    'profile': 4
+  };
+  if (navMap[screenId] !== undefined) {
+    const navs = document.querySelectorAll('.bottom-nav .nav-item');
+    if (navs[navMap[screenId]]) navs[navMap[screenId]].classList.add('active');
+  }
+  
+  if (screenId === 'profile') {
+    updateProfileStats();
+  }
+  if (screenId === 'stats') {
+    drawMoodChart();
+  }
+}
+
+function selectMood(element) {
+  document.querySelectorAll('.mood-item').forEach(item => item.classList.remove('selected'));
+  element.classList.add('selected');
+  currentMood = element.dataset.mood;
+}
+
+function saveMood() {
+  if (!currentMood) {
+    alert('กรุณาเลือกอารมณ์ก่อนบันทึก');
+    return;
+  }
+  const note = document.getElementById('mood-note').value;
+  const entry = {
+    mood: currentMood,
+    note: note,
+    date: new Date().toISOString()
+  };
+  moodHistory.push(entry);
+  localStorage.setItem('mindcare_moods', JSON.stringify(moodHistory));
+  
+  alert('บันทึกอารมณ์เรียบร้อยแล้ว 💜');
+  document.getElementById('mood-note').value = '';
+  document.querySelectorAll('.mood-item').forEach(item => item.classList.remove('selected'));
+  currentMood = null;
+  showScreen('home');
+}
+
+function updateProfileStats() {
+  const count = moodHistory.length;
+  document.getElementById('mood-count').textContent = count;
+}
+
+// PHQ-9 Questions (Thai)
+const phq9Questions = [
+  "ในช่วง 2 สัปดาห์ที่ผ่านมา คุณมีปัญหาดังต่อไปนี้บ่อยแค่ไหน?",
+  "1. รู้สึกหดหู่ เศร้า หรือสิ้นหวัง",
+  "2. รู้สึกไม่สนใจหรือไม่มีความสุขในการทำสิ่งต่าง ๆ",
+  "3. นอนไม่หลับ หรือหลับมากเกินไป",
+  "4. รู้สึกเหนื่อยล้า หรือไม่มีพลังงาน",
+  "5. ไม่อยากอาหาร หรือกินมากเกินไป",
+  "6. รู้สึกไม่ดีกับตัวเอง หรือรู้สึกว่าตัวเองล้มเหลว",
+  "7. มีปัญหาในการมีสมาธิ เช่น อ่านหนังสือหรือดูทีวี",
+  "8. เคลื่อนไหวหรือพูดช้าลงจนคนอื่นสังเกตเห็น หรือกระสับกระส่าย",
+  "9. คิดว่าตัวเองอยากตาย หรือทำร้ายตัวเอง"
+];
+
+const phq9Options = [
+  "ไม่เลย (0)",
+  "หลายวัน (1)",
+  "มากกว่าครึ่งหนึ่งของวัน (2)",
+  "เกือบทุกวัน (3)"
+];
+
+function startAssessment() {
+  document.querySelector('.assessment-intro').classList.add('hidden');
+  const container = document.getElementById('assessment-questions');
+  container.classList.remove('hidden');
+  container.innerHTML = '';
+  
+  assessmentAnswers = [];
+  
+  for (let i = 1; i <= 9; i++) {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.innerHTML = `
+      <h4>${phq9Questions[i]}</h4>
+      <div class="options">
+        ${phq9Options.map((opt, idx) => `
+          <label>
+            <input type="radio" name="q${i}" value="${idx}" onchange="saveAnswer(${i}, ${idx})">
+            ${opt}
+          </label>
+        `).join('')}
+      </div>
+    `;
+    container.appendChild(card);
+  }
+  
+  const submitBtn = document.createElement('button');
+  submitBtn.className = 'btn-primary';
+  submitBtn.textContent = 'ดูผลการประเมิน';
+  submitBtn.onclick = calculateResult;
+  submitBtn.style.margin = '20px';
+  container.appendChild(submitBtn);
+}
+
+function saveAnswer(qNum, value) {
+  assessmentAnswers[qNum - 1] = value;
+}
+
+function calculateResult() {
+  if (assessmentAnswers.filter(a => a !== undefined).length < 9) {
+    alert('กรุณาตอบครบทุกข้อ');
+    return;
+  }
+  const score = assessmentAnswers.reduce((sum, val) => sum + val, 0);
+  
+  let level = '';
+  let advice = '';
+  let color = '';
+  
+  if (score <= 4) {
+    level = 'น้อยมาก / ปกติ';
+    advice = 'อารมณ์ของคุณอยู่ในเกณฑ์ปกติ ลองบันทึกอารมณ์ต่อไปเพื่อติดตามตัวเอง';
+    color = '#10b981';
+  } else if (score <= 9) {
+    level = 'เล็กน้อย';
+    advice = 'อาจมีความเครียดบ้าง ลองทำกิจกรรมผ่อนคลายหรือพูดคุยกับคนใกล้ชิด';
+    color = '#3b82f6';
+  } else if (score <= 14) {
+    level = 'ปานกลาง';
+    advice = 'มีความเสี่ยงอยู่ในระดับปานกลาง ควรปรึกษาครูแนะแนว หรือผู้ใหญ่ที่ไว้ใจได้';
+    color = '#f59e0b';
+  } else if (score <= 19) {
+    level = 'ค่อนข้างมาก';
+    advice = 'ควรปรึกษาผู้เชี่ยวชาญด้านสุขภาพจิตโดยเร็ว และแจ้งครูหรือผู้ปกครอง';
+    color = '#ef4444';
+  } else {
+    level = 'มาก';
+    advice = 'มีความเสี่ยงสูง ควรขอความช่วยเหลือทันที โทรสายด่วน 1323 หรือไปพบแพทย์';
+    color = '#dc2626';
+  }
+  
+  document.getElementById('assessment-questions').classList.add('hidden');
+  const resultDiv = document.getElementById('assessment-result');
+  resultDiv.classList.remove('hidden');
+  resultDiv.innerHTML = `
+    <div class="result-box">
+      <h3>ผลการประเมิน</h3>
+      <div class="score-circle" style="background: ${color};">
+        <span>${score}</span>
+        <small style="font-size:14px;">คะแนน</small>
+      </div>
+      <h4>มีความเสี่ยงอยู่ในระดับ<br><strong>${level}</strong></h4>
+      <p style="margin:15px 0; color:#4b5563; line-height:1.6;">${advice}</p>
+      <p style="font-size:12px; color:#9ca3af; margin-top:20px;">
+        * ผลนี้เป็นการคัดกรองเบื้องต้นเท่านั้น ไม่ใช่การวินิจฉัยทางการแพทย์<br>
+        หากกังวล ควรปรึกษาผู้เชี่ยวชาญ
+      </p>
+      <button class="btn-primary" onclick="showScreen('help')">ดูช่องทางช่วยเหลือ</button>
+      <button class="btn-secondary" onclick="location.reload()">ทำแบบประเมินอีกครั้ง</button>
+    </div>
+  `;
+}
+
+function drawMoodChart() {
+  const canvas = document.getElementById('moodChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Simple bar chart mock
+  const days = ['จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส', 'อา'];
+  const values = [3, 2, 4, 3, 5, 4, 3]; // mock data
+  
+  ctx.fillStyle = '#8b5cf6';
+  days.forEach((day, i) => {
+    const h = values[i] * 20;
+    ctx.fillRect(30 + i * 38, 150 - h, 25, h);
+    ctx.fillStyle = '#6b7280';
+    ctx.font = '12px sans-serif';
+    ctx.fillText(day, 32 + i * 38, 170);
+    ctx.fillStyle = '#8b5cf6';
+  });
+}
+
+// Activity Modal Logic
+let activityInterval = null;
+let activityTimer = null;
+let isActivityRunning = false;
+let currentActivity = null;
+let timeLeft = 300; // default 5 min
+
+function openBreathing() {
+  currentActivity = 'breathing';
+  document.getElementById('modal-title').textContent = 'ฝึกหายใจ';
+  document.getElementById('modal-message').textContent = 'ไม่เป็นไรนะ วันแบบนี้เกิดขึ้นได้\nกดเริ่มแล้วหายใจตามจังหวะ';
+  document.getElementById('breath-circle').classList.remove('hidden');
+  document.getElementById('sound-controls').classList.add('hidden');
+  document.getElementById('timer-display').textContent = '04:00';
+  timeLeft = 240;
+  openModal();
+}
+
+function openMeditation() {
+  currentActivity = 'meditation';
+  document.getElementById('modal-title').textContent = 'สมาธิสั้น ๆ';
+  document.getElementById('modal-message').textContent = 'นั่งสบาย ๆ หลับตา โฟกัสที่ลมหายใจ\nทำ 5 นาที';
+  document.getElementById('breath-circle').classList.remove('hidden');
+  document.getElementById('sound-controls').classList.add('hidden');
+  document.getElementById('timer-display').textContent = '05:00';
+  timeLeft = 300;
+  openModal();
+}
+
+function openSounds() {
+  currentActivity = 'sounds';
+  document.getElementById('modal-title').textContent = 'เสียงผ่อนคลาย';
+  document.getElementById('modal-message').textContent = 'เลือกเสียงธรรมชาติฟังเบา ๆ';
+  document.getElementById('breath-circle').classList.add('hidden');
+  document.getElementById('sound-controls').classList.remove('hidden');
+  document.getElementById('timer-display').style.display = 'none';
+  openModal();
+}
+
+function openModal() {
+  document.getElementById('activity-modal').classList.remove('hidden');
+  isActivityRunning = false;
+  document.getElementById('start-btn').textContent = 'เริ่ม / หยุด';
+}
+
+function closeModal() {
+  stopActivity();
+  document.getElementById('activity-modal').classList.add('hidden');
+  document.getElementById('timer-display').style.display = 'block';
+  const audio = document.getElementById('rain-audio');
+  if (audio) audio.pause();
+}
+
+function toggleActivity() {
+  if (isActivityRunning) {
+    stopActivity();
+  } else {
+    startActivity();
+  }
+}
+
+function startActivity() {
+  isActivityRunning = true;
+  document.getElementById('start-btn').textContent = 'หยุด';
+  if (currentActivity === 'breathing' || currentActivity === 'meditation') {
+    startBreathingGuide();
+    startCountdown();
+  }
+}
+
+function stopActivity() {
+  isActivityRunning = false;
+  document.getElementById('start-btn').textContent = 'เริ่ม / หยุด';
+  if (activityInterval) clearInterval(activityInterval);
+  if (activityTimer) clearInterval(activityTimer);
+  activityInterval = null;
+  activityTimer = null;
+  const circle = document.getElementById('breath-circle');
+  if (circle) {
+    circle.classList.remove('inhale', 'exhale');
+    circle.textContent = 'หายใจเข้า';
+  }
+}
+
+function startBreathingGuide() {
+  let phase = 0; // 0 inhale, 1 hold, 2 exhale, 3 hold
+  const circle = document.getElementById('breath-circle');
+  const phases = [
+    { text: 'หายใจเข้า', class: 'inhale', duration: 4000 },
+    { text: 'กลั้น', class: '', duration: 2000 },
+    { text: 'หายใจออก', class: 'exhale', duration: 4000 },
+    { text: 'พัก', class: '', duration: 2000 }
+  ];
+
+  function nextPhase() {
+    if (!isActivityRunning) return;
+    const p = phases[phase % phases.length];
+    circle.textContent = p.text;
+    circle.className = 'breath-circle ' + p.class;
+    phase++;
+    activityInterval = setTimeout(nextPhase, p.duration);
+  }
+  nextPhase();
+}
+
+function startCountdown() {
+  activityTimer = setInterval(() => {
+    if (!isActivityRunning || timeLeft <= 0) {
+      if (timeLeft <= 0) {
+        alert('เสร็จสิ้นแล้ว! รู้สึกดีขึ้นไหม? 💜');
+        closeModal();
+      }
+      clearInterval(activityTimer);
+      return;
+    }
+    timeLeft--;
+    const min = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+    const sec = (timeLeft % 60).toString().padStart(2, '0');
+    document.getElementById('timer-display').textContent = `${min}:${sec}`;
+  }, 1000);
+}
+
+function playSound(type) {
+  const audio = document.getElementById('rain-audio');
+  if (audio) {
+    if (audio.paused) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+  }
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+  updateProfileStats();
+  showScreen('splash');
+});
+
+// Knowledge Content
+const knowledgeData = {
+  depression: {
+    title: "รู้จักภาวะซึมเศร้า",
+    html: `
+      <p>ภาวะซึมเศร้า (Depression) เป็นภาวะทางสุขภาพจิตที่ส่งผลกระทบต่ออารมณ์ ความคิด พฤติกรรม และร่างกาย ไม่ใช่เพียงแค่อาการเศร้าหรือเสียใจชั่วคราว แต่เป็นภาวะที่ต้องการความเข้าใจและการดูแลอย่างเหมาะสม</p>
+      <h3>อาการที่พบบ่อย:</h3>
+      <ul>
+        <li>รู้สึกเศร้า ท้อแท้ ว่างเปล่า หรือหงุดหงิดง่ายติดต่อกันเป็นเวลานาน (มักเกิน 2 สัปดาห์ขึ้นไป)</li>
+        <li>หมดความสนใจหรือความสุขในการทำกิจกรรมที่เคยชอบ</li>
+        <li>การนอนหลับเปลี่ยนแปลง เช่น นอนไม่หลับ หลับๆ ตื่นๆ หรือนอนมากเกินไป</li>
+        <li>ความอยากอาหารเปลี่ยนแปลง น้ำหนักลดลงหรือเพิ่มขึ้นอย่างชัดเจน</li>
+        <li>อ่อนเพลีย ไม่มีแรง รู้สึกเหนื่อยล้าตลอดเวลาแม้ไม่ได้ทำอะไรหนัก</li>
+        <li>สมาธิสั้นลง ตัดสินใจได้ยากขึ้น รู้สึกไร้ค่า หรือโทษตัวเอง</li>
+      </ul>
+      <h3>สาเหตุ:</h3>
+      <p>เกิดจากหลายปัจจัยร่วมกัน เช่น ความไม่สมดุลของสารเคมีในสมอง (สารสื่อประสาท) พันธุกรรม ความเครียดสะสม การเผชิญเหตุการณ์กระทบกระเทือนจิตใจอย่างรุนแรง หรือความกดดันในชีวิตประจำวัน</p>
+      <h3>การรับมือ:</h3>
+      <ul>
+        <li>เปิดใจพูดคุยกับคนที่ไว้ใจ เช่น ครอบครัว เพื่อนสนิท หรือครูแนะแนว</li>
+        <li>พยายามรักษาเวลาในการนอนและการกินให้เป็นปกติ</li>
+        <li>แบ่งเป้าหมายเล็กๆ ในแต่ละวัน ไม่กดดันตัวเองมากเกินไป</li>
+        <li>ปรึกษาผู้เชี่ยวชาญ เช่น จิตแพทย์ หรือนักจิตวิทยา เพื่อรับคำแนะนำและการรักษาที่ตรงจุด</li>
+      </ul>
+    `
+  },
+  "mental-health-tips": {
+    title: "10 วิธีดูแลสุขภาพจิต",
+    html: `
+      <ol>
+        <li><strong>นอนหลับให้เพียงพอ:</strong> เข้านอนและตื่นนอนให้เป็นเวลา เพื่อให้สมองและอารมณ์ได้ฟื้นฟูเต็มที่</li>
+        <li><strong>ขยับร่างกายสม่ำเสมอ:</strong> ออกกำลังกายเบาๆ เดินเล่น หรือยืดเหยียดวันละ 20–30 นาที เพื่อกระตุ้นสารแห่งความสุข</li>
+        <li><strong>กินอาหารที่มีประโยชน์:</strong> ลดน้ำตาลและคาเฟอีนที่มากเกินไป ซึ่งอาจกระตุ้นความวิตกกังวล</li>
+        <li><strong>ฝึกหายใจลึกๆ หรือทำสมาธิ:</strong> ใช้เวลา 5–10 นาทีอยู่กับลมหายใจ ช่วยดึงสติกลับมาอยู่กับปัจจุบัน</li>
+        <li><strong>จำกัดเวลาเล่นโซเชียลมีเดีย:</strong> พักจากหน้าจอและลดการเปรียบเทียบตัวเองกับผู้อื่น</li>
+        <li><strong>ทำกิจกรรมที่ชอบ:</strong> ฟังเพลง วาดรูป อ่านหนังสือ หรือทำงานอดิเรกที่ช่วยให้รู้สึกผ่อนคลาย</li>
+        <li><strong>เขียนบันทึกความรู้สึก (Journaling):</strong> ระบายความคิดลงในสมุด หรือเขียนเรื่องดีๆ เล็กน้อยที่เกิดขึ้นในแต่ละวัน</li>
+        <li><strong>พูดคุยกับคนรอบข้าง:</strong> รักษาความสัมพันธ์ที่ดีกับเพื่อนและครอบครัว ไม่เก็บทุกอย่างไว้คนเดียว</li>
+        <li><strong>รู้จักปฏิเสธเมื่อไม่ไหว:</strong> จัดลำดับความสำคัญ และไม่รับภาระที่เกินกำลังของตัวเอง</li>
+        <li><strong>ใจดีกับตัวเอง:</strong> ยอมรับความผิดพลาดว่าเป็นเรื่องปกติ และให้อภัยตัวเอง</li>
+      </ol>
+    `
+  },
+  "stress-signs": {
+    title: "สัญญาณเตือนว่าคุณกำลังเครียดมากเกินไป",
+    html: `
+      <p>ความเครียดในระดับที่พอดีช่วยกระตุ้นให้เราตื่นตัว แต่หากสะสมมากเกินไป ร่างกายและจิตใจจะส่งสัญญาณเตือนออกมาดังนี้</p>
+      <h4>ด้านร่างกาย:</h4>
+      <p>ปวดศีรษะบ่อย ปวดตึงบริเวณคอ บ่า ไหล่ ปวดท้อง อาหารไม่ย่อย ใจสั่น เหนื่อยง่าย หรือป่วยบ่อยขึ้นเพราะภูมิคุ้มกันลดลง</p>
+      <h4>ด้านอารมณ์:</h4>
+      <p>หงุดหงิดง่าย ฉุนเฉียว โมโหกับเรื่องเล็กน้อย รู้สึกกระวนกระวายใจ วิตกกังวลตลอดเวลา หรือรู้สึกท้อแท้หมดกำลังใจ</p>
+      <h4>ด้านความคิด:</h4>
+      <p>คิดวนเวียนเรื่องเดิมซ้ำๆ ไม่มีสมาธิ หลงลืมง่าย ตัดสินใจเรื่องง่ายๆ ได้ช้าลง หรือมองทุกอย่างในแง่ลบ</p>
+      <h4>ด้านพฤติกรรม:</h4>
+      <p>พฤติกรรมการกินและการนอนเปลี่ยนไป แยกตัวออกจากสังคม ไม่อยากคุยกับใคร หรือผลัดวันประกันพรุ่งบ่อยขึ้น</p>
+    `
+  },
+  "help-friend": {
+    title: "วิธีช่วยเพื่อนให้รู้สึกดี",
+    html: `
+      <p>เมื่อเห็นเพื่อนกำลังเผชิญกับความเครียดหรือความทุกข์ใจ การอยู่เคียงข้างอย่างถูกวิธีจะช่วยให้เพื่อนรู้สึกปลอดภัยและไม่โดดเดี่ยว</p>
+      <ul>
+        <li><strong>รับฟังอย่างตั้งใจโดยไม่ตัดสิน:</strong> เปิดโอกาสให้เพื่อนได้ระบายเต็มที่ หลีกเลี่ยงการพูดแทรก สั่งสอน หรือรีบตัดสินว่าเรื่องของเพื่อนเป็นเรื่องเล็กน้อย</li>
+        <li><strong>หลีกเลี่ยงคำพูดที่บั่นทอนโดยไม่ตั้งใจ:</strong> เลี่ยงคำพูดอย่าง "แค่นี้เอง คิดมากไปน่า" หรือ "คนอื่นแย่กว่านี้ตั้งเยอะ" เพราะอาจทำให้เพื่อนรู้สึกผิดที่ตัวเองอ่อนแอ</li>
+        <li><strong>ใช้คำพูดที่แสดงความเข้าใจ:</strong> เช่น "เราอยู่ตรงนี้นะ" "เข้าใจเลยว่ามันหนักมาก" หรือ "อยากระบายอะไรบอกเราได้เสมอ"</li>
+        <li><strong>ชวนทำกิจกรรมเบาๆ ผ่อนคลาย:</strong> หากเพื่อนยังไม่อยากพูด อาจชวนไปเดินเล่น หาของอร่อยกิน หรือนั่งอยู่เป็นเพื่อนเงียบๆ เพื่อไม่ให้รู้สึกโดดเดี่ยว</li>
+        <li><strong>แนะนำให้ขอความช่วยเหลือเมื่อจำเป็น:</strong> หากสังเกตว่าเพื่อนมีอาการหนักขึ้นหรือเริ่มส่งผลต่อการใช้ชีวิตประจำวัน ชวนเพื่อนไปพูดคุยกับผู้ใหญ่ที่ไว้ใจ ครูแนะแนว หรือผู้เชี่ยวชาญด้านสุขภาพจิต (หรือโทรสายด่วนสุขภาพจิต 1323 ในประเทศไทย)</li>
+      </ul>
+    `
+  }
+};
+
+function showKnowledge(key) {
+  const data = knowledgeData[key];
+  if (!data) return;
+  document.getElementById('detail-title').textContent = data.title;
+  document.getElementById('detail-content').innerHTML = data.html;
+  showScreen('knowledge-detail');
+}
+
+// Mental Progress Tracking (ดีขึ้น / ลดลง)
+const moodScores = {
+  happy: 5,
+  good: 4,
+  normal: 3,
+  sad: 2,
+  stressed: 1,
+  anxious: 1
+};
+
+function calculateProgress() {
+  if (moodHistory.length < 4) {
+    return { trend: 'neutral', text: 'บันทึกอารมณ์เพิ่มอีกสักหน่อย เพื่อดูแนวโน้มการพัฒนาทางจิตใจ' };
+  }
+  const recent = moodHistory.slice(-7);
+  const older = moodHistory.slice(-14, -7);
+  if (older.length === 0) {
+    return { trend: 'neutral', text: 'กำลังติดตามอารมณ์ของคุณอยู่ ลองบันทึกต่อไปนะ' };
+  }
+  const avgRecent = recent.reduce((s, m) => s + (moodScores[m.mood] || 3), 0) / recent.length;
+  const avgOlder = older.reduce((s, m) => s + (moodScores[m.mood] || 3), 0) / older.length;
+  const diff = avgRecent - avgOlder;
+  if (diff > 0.5) {
+    return { trend: 'good', text: '🎉 การพัฒนาทางจิตใจของคุณดีขึ้น! อารมณ์โดยรวมดีขึ้นในช่วงนี้ ทำต่อไปเรื่อย ๆ นะ' };
+  } else if (diff < -0.5) {
+    return { trend: 'bad', text: '⚠️ แนวโน้มอารมณ์ลดลงเล็กน้อย ลองทำกิจกรรมผ่อนคลายหรือพูดคุยกับคนที่ไว้ใจได้' };
+  } else {
+    return { trend: 'neutral', text: 'อารมณ์ค่อนข้างคงที่ ลองสังเกตตัวเองต่อไปและดูแลใจตัวเองอย่างสม่ำเสมอ' };
+  }
+}
+
+// Update profile to show progress
+function updateProfileStats() {
+  const count = moodHistory.length;
+  const el = document.getElementById('mood-count');
+  if (el) el.textContent = count;
+  // Add progress if element exists
+  let progressEl = document.getElementById('progress-info');
+  if (!progressEl) {
+    const stats = document.querySelector('.profile-stats');
+    if (stats) {
+      progressEl = document.createElement('div');
+      progressEl.id = 'progress-info';
+      progressEl.className = 'progress-card';
+      stats.parentNode.insertBefore(progressEl, stats.nextSibling);
+    }
+  }
+  if (progressEl) {
+    const prog = calculateProgress();
+    progressEl.innerHTML = `<strong class="trend-${prog.trend}">การพัฒนาทางจิตใจ</strong><br>${prog.text}`;
+  }
+}
+
+// Simple Google Login simulation
+function googleLogin() {
+  alert('เข้าสู่ระบบด้วย Google สำเร็จ!\nยินดีต้อนรับนักเรียนโรงเรียนนบพิตำวิทยา');
+  showScreen('home');
+}
+
+</script>
+</body>
+</html>
